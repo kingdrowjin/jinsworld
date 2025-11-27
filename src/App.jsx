@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react'
 import './App.css'
 
-// Initial state - mock backend data structure
 const initialEvent = {
   name: '',
   phoneNumber: '',
@@ -39,13 +38,10 @@ function App() {
   const backgroundInputRef = useRef(null)
   const photoInputRef = useRef(null)
 
-  // Update event field - mock backend call
   const updateEvent = (field, value) => {
     setEvent(prev => ({ ...prev, [field]: value }))
-    // In real app: api.updateEvent(field, value)
   }
 
-  // Handle flyer image upload
   const handleFlyerUpload = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -54,7 +50,6 @@ function App() {
     }
   }
 
-  // Handle background change
   const handleBackgroundUpload = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -63,7 +58,6 @@ function App() {
     }
   }
 
-  // Handle photo gallery upload
   const handlePhotoUpload = (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -72,43 +66,36 @@ function App() {
     }
   }
 
-  // Remove photo from gallery
   const removePhoto = (index) => {
     const newGallery = event.photoGallery.filter((_, i) => i !== index)
     updateEvent('photoGallery', newGallery)
   }
 
-  // Toggle modal
   const toggleModal = (modal) => {
     setUi(prev => ({ ...prev, [modal]: !prev[modal] }))
   }
 
-  // Add link
   const addLink = () => {
     updateEvent('links', [...event.links, { title: '', url: '' }])
   }
 
-  // Update link
   const updateLink = (index, field, value) => {
     const newLinks = [...event.links]
     newLinks[index] = { ...newLinks[index], [field]: value }
     updateEvent('links', newLinks)
   }
 
-  // Remove link
   const removeLink = (index) => {
     const newLinks = event.links.filter((_, i) => i !== index)
     updateEvent('links', newLinks)
   }
 
-  // Toggle module
   const toggleModule = (moduleId) => {
     setModules(prev => prev.map(m =>
       m.id === moduleId ? { ...m, enabled: !m.enabled } : m
     ))
   }
 
-  // Handle Go Live
   const handleGoLive = () => {
     console.log('Event data:', event)
     console.log('Enabled modules:', modules.filter(m => m.enabled))
@@ -122,7 +109,6 @@ function App() {
       backgroundPosition: 'center'
     } : undefined}>
 
-      {/* Header */}
       <header className="header">
         <div className="logo">let's hang</div>
         <nav className="nav">
@@ -133,9 +119,7 @@ function App() {
         </nav>
       </header>
 
-      {/* Main Content */}
       <main className="main-content">
-        {/* Left Section - Flyer */}
         <section className="flyer-section">
           <div className="flyer-container">
             {event.flyerImage ? (
@@ -176,11 +160,9 @@ function App() {
           />
         </section>
 
-        {/* Right Section - Form */}
         <section className="form-section">
           <h1 className="event-title">Name your event</h1>
 
-          {/* Phone Input */}
           <div className="phone-input-container">
             <span style={{ padding: '0 12px' }}>📱</span>
             <input
@@ -193,7 +175,6 @@ function App() {
             <button className="phone-submit-btn">→</button>
           </div>
 
-          {/* Event Details Card */}
           <div className="event-details-card">
             <div className="detail-row">
               <span className="detail-icon">📅</span>
@@ -227,7 +208,6 @@ function App() {
             </div>
           </div>
 
-          {/* Description */}
           <div className="description-container">
             <textarea
               className="description-input"
@@ -237,7 +217,6 @@ function App() {
             />
           </div>
 
-          {/* Module Buttons */}
           <div className="module-buttons">
             <button
               className={`module-btn ${event.capacity ? 'active' : ''}`}
@@ -260,7 +239,6 @@ function App() {
             <button className="show-more-btn">Show more</button>
           </div>
 
-          {/* Customize Section */}
           <div className="customize-section">
             <div className="customize-header">
               <div className="customize-icons">
@@ -286,14 +264,12 @@ function App() {
             </button>
           </div>
 
-          {/* Go Live Button */}
           <button className="go-live-btn" onClick={handleGoLive}>
             🎉 Go live
           </button>
         </section>
       </main>
 
-      {/* Capacity Modal */}
       {ui.showCapacityModal && (
         <div className="modal-overlay" onClick={() => toggleModal('showCapacityModal')}>
           <div className="modal" onClick={e => e.stopPropagation()}>
@@ -315,7 +291,6 @@ function App() {
         </div>
       )}
 
-      {/* Photo Gallery Modal */}
       {ui.showPhotoGalleryModal && (
         <div className="modal-overlay" onClick={() => toggleModal('showPhotoGalleryModal')}>
           <div className="modal" onClick={e => e.stopPropagation()}>
@@ -348,7 +323,6 @@ function App() {
         </div>
       )}
 
-      {/* Links Modal */}
       {ui.showLinksModal && (
         <div className="modal-overlay" onClick={() => toggleModal('showLinksModal')}>
           <div className="modal" onClick={e => e.stopPropagation()}>
@@ -381,7 +355,6 @@ function App() {
         </div>
       )}
 
-      {/* Customize Modal */}
       {ui.showCustomizeModal && (
         <div className="modal-overlay" onClick={() => toggleModal('showCustomizeModal')}>
           <div className="modal" onClick={e => e.stopPropagation()}>
